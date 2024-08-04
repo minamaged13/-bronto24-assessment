@@ -11,6 +11,7 @@ import { user } from "@/types/user";
 import { Button } from "./ui/button";
 import deleteUser from "@/actions/deleteUser";
 import { useCounter } from "@/context/CounterContext";
+import EditUserFormModal from "./EditUserFormModal";
 type props = {
   userData: user;
   onDelete: () => void;
@@ -19,8 +20,8 @@ function UserCard({ userData, onDelete }: props) {
   const data = userData;
   const { increment } = useCounter();
   const [toggle, setToggle] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const handleDropMenu = () => {
     setToggle(!toggle);
   };
@@ -28,11 +29,11 @@ function UserCard({ userData, onDelete }: props) {
   const handleDeleteClick = () => {
     setToggle(false);
     increment();
-    setShowModal(true);
+    setShowDeleteModal(true);
   };
 
   const handleCloseModal = () => {
-    setShowModal(false);
+    setShowDeleteModal(false);
   };
 
   const handleDelete = async () => {
@@ -40,12 +41,12 @@ function UserCard({ userData, onDelete }: props) {
     // Perform delete action here
     await deleteUser(userData.id);
     onDelete();
-    setShowModal(false);
+    setShowDeleteModal(false);
     increment();
   };
   const handleEditClick = () => {
     setToggle(false);
-    setShowModal(true);
+    setShowEditModal(true);
   };
 
   return (
@@ -95,9 +96,14 @@ function UserCard({ userData, onDelete }: props) {
         </div>
       </div>
       <DeleteConfirmationModal
-        show={showModal}
+        show={showDeleteModal}
         onClose={handleCloseModal}
         onDelete={handleDelete}
+      />
+      <EditUserFormModal
+        show={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        userId={data.id}
       />
     </div>
   );
