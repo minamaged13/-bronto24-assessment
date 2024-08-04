@@ -4,7 +4,9 @@ import UserCard from "./UserCard";
 
 import { user } from "@/types/user";
 import AddUserButton from "./AddUserButton";
+import { useCounter } from "@/context/CounterContext";
 function Users() {
+  const { count } = useCounter();
   const [userProfiles, setUserProfiles] = useState<user[]>([]);
   const [deleted, setDeleted] = useState<number>(1);
   const onDelete = () => {
@@ -21,7 +23,7 @@ function Users() {
     };
 
     fetchData();
-  }, [deleted]);
+  }, [deleted,count]);
   return (
     <>
       <div className=" p-6 grid  sm:grid-cols-1 sm:pl-14 sm:gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 ">

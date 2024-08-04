@@ -10,13 +10,14 @@ import { PiDotsThreeOutline } from "react-icons/pi";
 import { user } from "@/types/user";
 import { Button } from "./ui/button";
 import deleteUser from "@/actions/deleteUser";
+import { useCounter } from "@/context/CounterContext";
 type props = {
   userData: user;
   onDelete: () => void;
 };
 function UserCard({ userData, onDelete }: props) {
   const data = userData;
-
+  const { increment } = useCounter();
   const [toggle, setToggle] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
@@ -26,6 +27,7 @@ function UserCard({ userData, onDelete }: props) {
 
   const handleDeleteClick = () => {
     setToggle(false);
+    increment();
     setShowModal(true);
   };
 
@@ -39,6 +41,7 @@ function UserCard({ userData, onDelete }: props) {
     await deleteUser(userData.id);
     onDelete();
     setShowModal(false);
+    increment();
   };
   const handleEditClick = () => {
     setToggle(false);
