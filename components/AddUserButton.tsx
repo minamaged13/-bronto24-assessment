@@ -6,7 +6,7 @@ import { Button } from "./ui/button";
  }
 function AddUserButton({handleModal}: addUserButtonProps) {
   return (
-      <div  className=" mb-3 w-[140px] flex justify-center  items-center  bg-sidebarBlue rounded-xl text-white">
+      <div  className=" mt-14 mb-1 w-[140px] flex justify-center  items-center  bg-sidebarBlue rounded-xl text-white">
       <HiPlus  onClick={handleModal} />
       <Button onClick={handleModal}>New User</Button>
   </div>
